@@ -2,14 +2,12 @@ package com.br.lfmelo.adapters.mappers;
 
 import com.br.lfmelo.adapters.driven.entities.PaymentEntity;
 import com.br.lfmelo.core.model.Payment;
-import com.br.lfmelo.core.model.enums.PaymentStatus;
-import com.br.lfmelo.core.model.enums.PaymentType;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-09T14:33:12-0300",
+    date = "2025-11-09T15:38:22-0300",
     comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -38,19 +36,12 @@ public class PaymentMapperImpl implements PaymentMapper {
             return null;
         }
 
-        Long id = null;
-        PaymentType type = null;
-        PaymentStatus status = null;
-        String qrCode = null;
+        Payment payment = new Payment();
 
-        id = paymentEntity.getId();
-        type = paymentEntity.getType();
-        status = paymentEntity.getStatus();
-        qrCode = paymentEntity.getQrCode();
-
-        Long orderId = null;
-
-        Payment payment = new Payment( id, orderId, type, status, qrCode );
+        payment.setId( paymentEntity.getId() );
+        payment.setType( paymentEntity.getType() );
+        payment.setStatus( paymentEntity.getStatus() );
+        payment.setQrCode( paymentEntity.getQrCode() );
 
         return payment;
     }
