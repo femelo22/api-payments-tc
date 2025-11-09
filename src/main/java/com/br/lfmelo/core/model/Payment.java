@@ -6,14 +6,14 @@ import com.br.lfmelo.core.model.enums.PaymentType;
 public class Payment {
 
     private Long id;
-    private Order order;
+    private Long orderId;
     private PaymentType type;
     private PaymentStatus status;
     private String qrCode;
 
-    public Payment(Long id, Order order, PaymentType type, PaymentStatus status,String qrCode) {
+    public Payment(Long id, Long orderId, PaymentType type, PaymentStatus status,String qrCode) {
         this.id = id;
-        this.order = order;
+        this.orderId = orderId;
         this.type = type;
         this.status = status;
         this.qrCode = qrCode;
@@ -21,10 +21,6 @@ public class Payment {
 
     public Long getId() {
         return id;
-    }
-
-    public Order getOrder() {
-        return order;
     }
 
     public PaymentType getType() {
@@ -35,8 +31,16 @@ public class Payment {
         return status;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public void setType(PaymentType type) {

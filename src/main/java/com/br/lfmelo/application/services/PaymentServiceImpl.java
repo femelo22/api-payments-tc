@@ -4,7 +4,6 @@ import com.br.lfmelo.adapters.dtos.mercadopago.MercadoPagoItemDTO;
 import com.br.lfmelo.adapters.dtos.mercadopago.MercadoPagoRequestDTO;
 import com.br.lfmelo.adapters.dtos.mercadopago.MercadoPagoResponseDTO;
 import com.br.lfmelo.adapters.dtos.order.OrderDTO;
-import com.br.lfmelo.adapters.dtos.order.OrderItemDTO;
 import com.br.lfmelo.adapters.dtos.product.ProductDTO;
 import com.br.lfmelo.core.model.OrderItem;
 import com.br.lfmelo.core.model.Payment;
@@ -53,11 +52,6 @@ public class PaymentServiceImpl implements PaymentServicePort {
     private String posId;
 
 
-    @Override
-    public Payment updatePayment(Payment payment) {
-        return repository.update(payment);
-    }
-
     public String gerarQrCode(OrderDTO orderDTO) {
         try {
             List<MercadoPagoItemDTO> itens = mapOrderItems(orderDTO.items());
@@ -94,7 +88,7 @@ public class PaymentServiceImpl implements PaymentServicePort {
     private List<MercadoPagoItemDTO> mapOrderItems(List<OrderItem> orderItems) {
         return orderItems.stream()
                 .map(orderItem -> {
-                    ProductDTO product = productClient.getProductById(orderItem.getProduct().getId());
+                    ProductDTO product = productClient.getProductById(orderItem.getProduct().id());
                     return new MercadoPagoItemDTO(
                             product.id().toString(),
                             product.category().toString(),

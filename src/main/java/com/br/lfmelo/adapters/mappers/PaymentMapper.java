@@ -10,6 +10,6 @@ public interface PaymentMapper {
 
     PaymentEntity paymentToPaymentEntity(Payment payment);
 
-    @Mapping(target = "order", ignore = true)
+    @Mapping(target = "orderId", ignore = true)
     Payment paymentEntityToPayment(PaymentEntity paymentEntity);
 }

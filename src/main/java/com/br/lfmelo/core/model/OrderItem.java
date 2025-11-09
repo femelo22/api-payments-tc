@@ -1,17 +1,20 @@
 package com.br.lfmelo.core.model;
 
+import com.br.lfmelo.adapters.dtos.order.OrderDTO;
+import com.br.lfmelo.adapters.dtos.product.ProductDTO;
+
 import java.math.BigDecimal;
 
 public class OrderItem {
 
     private Long id;
-    private Order order;
-    private Product product;
+    private OrderDTO order;
+    private ProductDTO product;
     private Integer amount;
     private BigDecimal unitPrice;
     private String notes;
 
-    public OrderItem(Long id, Order order, Product product, Integer amount, BigDecimal unitPrice, String notes) {
+    public OrderItem(Long id, OrderDTO order, ProductDTO product, Integer amount, BigDecimal unitPrice, String notes) {
         this.id = id;
         this.order = order;
         this.product = product;
@@ -28,19 +31,19 @@ public class OrderItem {
         this.id = id;
     }
 
-    public Order getOrder() {
+    public OrderDTO getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(OrderDTO order) {
         this.order = order;
     }
 
-    public Product getProduct() {
+    public ProductDTO getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductDTO product) {
         this.product = product;
     }
 

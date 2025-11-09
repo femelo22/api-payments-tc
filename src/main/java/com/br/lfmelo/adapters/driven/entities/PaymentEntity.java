@@ -20,10 +20,8 @@ public class PaymentEntity {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false, updatable = false)
-    @JsonIgnore
-    private OrderEntity order;
+    @Column(name = "order_id")
+    private Long orderId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, length = 50)

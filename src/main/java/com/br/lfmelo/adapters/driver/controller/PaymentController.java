@@ -22,13 +22,13 @@ public class PaymentController {
     public ResponseEntity<?> enviaPagamentoMp(@RequestBody OrderPayment dto) {
 
         OrderDTO orderDto = new OrderDTO(
-                dto.order().getId(),
-                dto.order().getClientId(),
-                dto.order().getCpf(),
-                dto.order().getStatus(),
-                dto.order().getTotalPrice(),
-                dto.order().getDate(),
-                dto.order().getItems());
+                dto.order().id(),
+                dto.order().clientId(),
+                dto.order().cpf(),
+                dto.order().status(),
+                dto.order().totalPrice(),
+                dto.order().date(),
+                dto.order().items());
 
         paymentPort.gerarQrCode(orderDto);
         return null;
