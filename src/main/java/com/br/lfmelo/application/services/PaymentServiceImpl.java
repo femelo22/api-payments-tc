@@ -59,6 +59,8 @@ public class PaymentServiceImpl implements PaymentServicePort {
         Payment payment = new Payment();
         payment.setType(paymentType);
         payment.setQrCode(qrCodeGenerated);
+        payment.setOrderId(orderDTO.id());
+        payment.setStatus(PaymentStatus.CREATED);
         return repository.createPayment(payment);
     }
 
