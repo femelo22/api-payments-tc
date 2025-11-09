@@ -30,7 +30,7 @@ public class PaymentController {
                 dto.order().date(),
                 dto.order().items());
 
-        paymentPort.gerarQrCode(orderDto);
+        paymentPort.createPaymentWithQrCode(orderDto, dto.paymentType());
         return null;
     }
 

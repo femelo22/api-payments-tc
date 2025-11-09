@@ -2,6 +2,8 @@ package com.br.lfmelo.application.services;
 
 import com.br.lfmelo.adapters.dtos.ConfirmedMessageDto;
 import com.br.lfmelo.adapters.dtos.MerchantOrderDTO;
+import com.br.lfmelo.core.model.enums.PaymentStatus;
+import com.br.lfmelo.core.ports.PaymentServicePort;
 import com.br.lfmelo.core.ports.WebhookServicePort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,8 +23,8 @@ public class WebhookService implements WebhookServicePort {
     @Value("${mercadopago.token}")
     private String mercadoPagoToken;
 
-//    @Autowired
-//    private OrderServicePort orderServicePort;
+    @Autowired
+    private PaymentServicePort paymentPort;
 
     @Override
     public void receberNotificacao(ConfirmedMessageDto payload) {
@@ -48,17 +50,8 @@ public class WebhookService implements WebhookServicePort {
             MerchantOrderDTO merchantOrder = response.getBody();
             System.out.println("Ordem recebida: " + merchantOrder.getOrder_status());
 
-            //TODO: JOGAR PARA STATIC DEPOIS - "payment_required"
             if ("payment_required".equalsIgnoreCase(merchantOrder.getOrder_status())) {
-                // paymentServicePort buscar por order_id (External_reference)
-                // Atualizar o status e atualizar o payment
-
-
-
-//                Order order = orderServicePort.findById(Long.parseLong(merchantOrder.getExternal_reference()));
-//
-////                order.getPayment().setStatus(PaymentStatus.IN_PROGRESS);
-//                orderServicePort.save(order);
+                paymentPort.updatePayment(merchantOrder.getExternal_reference(), PaymentStatus.IN_PROGRESS);
             }
 
 

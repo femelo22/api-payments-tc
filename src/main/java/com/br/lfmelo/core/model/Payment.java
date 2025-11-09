@@ -19,6 +19,9 @@ public class Payment {
         this.qrCode = qrCode;
     }
 
+    public Payment() {
+    }
+
     public Long getId() {
         return id;
     }

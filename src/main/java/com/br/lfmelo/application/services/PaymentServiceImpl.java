@@ -7,6 +7,8 @@ import com.br.lfmelo.adapters.dtos.order.OrderDTO;
 import com.br.lfmelo.adapters.dtos.product.ProductDTO;
 import com.br.lfmelo.core.model.OrderItem;
 import com.br.lfmelo.core.model.Payment;
+import com.br.lfmelo.core.model.enums.PaymentStatus;
+import com.br.lfmelo.core.model.enums.PaymentType;
 import com.br.lfmelo.core.ports.PaymentRepositoryPort;
 import com.br.lfmelo.core.ports.PaymentServicePort;
 import com.br.lfmelo.infrastructure.exceptions.IntegracaoMercadoPagoException;
@@ -51,13 +53,21 @@ public class PaymentServiceImpl implements PaymentServicePort {
     @Value("${mercadopago.pos-id}")
     private String posId;
 
+    @Override
+    public Payment createPaymentWithQrCode(OrderDTO orderDTO, PaymentType paymentType) {
+        String qrCodeGenerated = gerarQrCode(orderDTO); //Envia o webhook e cria o Pagamento
+        Payment payment = new Payment();
+        payment.setType(paymentType);
+        payment.setQrCode(qrCodeGenerated);
+        return repository.createPayment(payment);
+    }
 
+    @Override
     public String gerarQrCode(OrderDTO orderDTO) {
         try {
             List<MercadoPagoItemDTO> itens = mapOrderItems(orderDTO.items());
             MercadoPagoRequestDTO mpRequest = new MercadoPagoRequestDTO();
-            //verificar como faremos, pois ID é criado apenas após persistir no banco
-            mpRequest.setExternal_reference(orderDTO.id().toString());
+            mpRequest.setExternal_reference(orderDTO.id().toString()); //Seta o id do PEDIDO como referencia no retorno do webhook MP
             mpRequest.setNotification_url(notificationUrl);
             mpRequest.setTotal_amount(orderDTO.totalPrice());
             mpRequest.setItems(itens);
@@ -83,6 +93,18 @@ public class PaymentServiceImpl implements PaymentServicePort {
         } catch (Exception e) {
             throw new IntegracaoMercadoPagoException("Erro ao gerar QR Code com Mercado Pago: " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public void updatePayment(String externalReference, PaymentStatus paymentStatus) {
+        Payment payment = getPaymentByOrderId(Long.getLong(externalReference));
+        payment.setStatus(paymentStatus);
+        repository.update(payment);
+    }
+
+    @Override
+    public Payment getPaymentByOrderId(Long idOrder) {
+        return repository.findByOrderId(idOrder);
     }
 
     private List<MercadoPagoItemDTO> mapOrderItems(List<OrderItem> orderItems) {
