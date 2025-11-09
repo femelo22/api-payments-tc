@@ -57,7 +57,7 @@ public class WebhookService implements WebhookServicePort {
                 // Atualizar o status e atualizar o payment
                 Order order = orderServicePort.findById(Long.parseLong(merchantOrder.getExternal_reference()));
 
-                order.getPayment().setStatus(PaymentStatus.IN_PROGRESS);
+//                order.getPayment().setStatus(PaymentStatus.IN_PROGRESS);
                 orderServicePort.save(order);
             }
 
