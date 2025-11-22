@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PaymentEntity {
     @Id
-    private Long id;
+    private String id;
     @Indexed(unique = true)
     private Long orderId;
     private PaymentType type;

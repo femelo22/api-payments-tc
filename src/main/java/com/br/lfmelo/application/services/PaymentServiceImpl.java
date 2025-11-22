@@ -112,7 +112,7 @@ public class PaymentServiceImpl implements PaymentServicePort {
     private List<MercadoPagoItemDTO> mapOrderItems(List<OrderItem> orderItems) {
         return orderItems.stream()
                 .map(orderItem -> {
-                    ProductDTO product = productClient.getProductById(orderItem.getProduct().id());
+                    ProductDTO product = orderItem.getProduct();
                     return new MercadoPagoItemDTO(
                             product.id().toString(),
                             product.category().toString(),
