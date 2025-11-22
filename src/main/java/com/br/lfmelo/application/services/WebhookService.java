@@ -51,7 +51,7 @@ public class WebhookService implements WebhookServicePort {
             System.out.println("Ordem recebida: " + merchantOrder.getOrder_status());
 
             if ("payment_required".equalsIgnoreCase(merchantOrder.getOrder_status())) {
-                paymentPort.updatePayment(merchantOrder.getExternal_reference(), PaymentStatus.IN_PROGRESS);
+                paymentPort.updatePaymentByOrderId(merchantOrder.getExternal_reference(), PaymentStatus.IN_PROGRESS);
             }
 
 
