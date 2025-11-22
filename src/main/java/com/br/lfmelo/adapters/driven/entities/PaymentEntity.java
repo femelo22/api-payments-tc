@@ -2,36 +2,24 @@ package com.br.lfmelo.adapters.driven.entities;
 
 import com.br.lfmelo.core.model.enums.PaymentStatus;
 import com.br.lfmelo.core.model.enums.PaymentType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "payments")
+
+@Document
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PaymentEntity {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Long id;
-
-    @Column(name = "order_id")
+    @Indexed(unique = true)
     private Long orderId;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false, length = 50)
     private PaymentType type;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false, length = 50)
     private PaymentStatus status;
-
-    @Column(name = "qr_code", nullable = true, length = 200)
     private String qrCode;
-
 }
