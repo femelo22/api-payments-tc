@@ -99,7 +99,7 @@ public class PaymentServiceImpl implements PaymentServicePort {
 
     @Override
     public void updatePaymentByOrderId(String externalReference, PaymentStatus paymentStatus) {
-        Payment payment = getPaymentByOrderId(Long.getLong(externalReference));
+        Payment payment = getPaymentByOrderId(Long.parseLong(externalReference));
         payment.setStatus(paymentStatus);
         repository.update(payment);
     }
